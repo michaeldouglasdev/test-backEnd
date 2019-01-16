@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+	 
+	 <div>
+   		<h:form id="form-sidebar">
+			<div class="sidebar js-sidebar">
+				<nav class="menu">
+					<div class="user-profile">
+						<p:outputPanel id="user-profile-image" styleClass="user-profile-image">
+							<p:graphicImage library="images" name="user-no-image.png" cache="false"></p:graphicImage>
+						</p:outputPanel>
+						
+						<h:outputText value="Michael Douglas" styleClass="user-profile-name" />
+						<h:outputText value="Desenvolvedor" styleClass="user-profile-role"/>
+					</div>
+					
+					<ul>
+						<li>
+							<p:commandLink action="#{navegacaoBean.irParaHome()}" process="@this" partialSubmit="true" global="false">
+								<i class="fa fa-home"></i><h:outputText value="Home"/>
+							</p:commandLink>
+						</li>
+						
+						<li class="has-children">
+							<p:commandLink process="@this" global="false">
+								<i class="fa fa-user-plus"></i><h:outputText value="Cadastrar" /><i class="fa fa-angle-down" style="float: right; margin-top: 5px;"></i>	
+							</p:commandLink>
+							<ul>
+								<li>
+									<p:commandLink action="#{navegacaoBean.irParaCadastroJogador()}" process="@this" partialSubmit="true" global="false">
+										<i class="pi pi-user"></i><h:outputText value="Jogador" />
+									</p:commandLink>
+								</li>
+							</ul>
+						</li>
+						
+						<li class="has-children">
+							<p:commandLink process="@this" partialSubmit="true" global="false">
+								<i class="fa fa-search"></i><h:outputText value="Consultar" /><i class="fa fa-angle-down" style="float: right; margin-top: 5px;"></i>	
+							</p:commandLink>
+							<ul>
+								<li>
+									<p:commandLink action="#{navegacaoBean.irParaListarJogadores()}" process="@this" partialSubmit="true" global="false">
+										<i class="pi pi-user"></i><h:outputText value="Jogador" />
+									</p:commandLink>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</h:form>
+	</div>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+
+   
+    <ui:composition template="/WEB-INF/template/template.xhtml">
+   		<ui:define name="content">
+   			<h1>Jogadores cadastrados</h1>
+   		
+	   		<p:separator></p:separator>
+	   		
+	   		<h:form id="form-listar-jogadores">
+	   			<p:panel header="Jogadores" styleClass="panel-blue">
+		   			<div class="ui-fluid">
+		   				<p:dataTable id="datatable-listar-jogadores" value="#{listarJogadoresBean.jogadores}" var="jogador" reflow="true" selection="#{atualizarJogadorBean.jogador}" selectionMode="single" rowKey="#{jogador.id}" styleClass="datatable-listar-jogadores" emptyMessage="Não há jogadores cadastrados">
+				   			<p:column headerText="Nome" filterBy="#{jogador.nome}" filterMatchMode="contains" sortBy="#{jogador.nome}">
+			   					<h:outputText value="#{jogador.nome}" />
+				   			</p:column>
+				   			
+				   			<p:column headerText="E-mail" filterBy="#{jogador.email}" filterMatchMode="contains"  sortBy="#{jogador.email}">
+			   					<h:outputText value="#{jogador.email}" />
+				   			</p:column>
+				   			
+				   			<p:column headerText="Telefone" width="120" filterBy="#{jogador.telefone}" filterMatchMode="contains"  sortBy="#{jogador.telefone}">
+		   						<h:outputText value="#{jogador.telefone}" />
+				   			</p:column>
+	
+				   			<p:column headerText="Codinome" filterBy="#{jogador.personagem.nome}" filterMatchMode="contains" sortBy="#{jogador.personagem.nome}">
+					   			<h:outputText value="#{jogador.personagem.nome}" />
+				   			</p:column>
+				   			
+				   			<p:column headerText="Grupo" width="120" filterBy="#{jogador.personagem.grupo.nome}" filterMatchMode="contains" sortBy="#{jogador.personagem.grupo.nome}">
+					   			<h:outputText value="#{jogador.personagem.grupo.nome}" />
+				   			</p:column>
+				   			
+				   			<p:column width="150">
+				   				<p:commandLink value="Editar" process="datatable-listar-jogadores" actionListener="#{atualizarJogadorBean.setJogador(jogador)}" update=":dlgEdicaoJogador"  oncomplete="PF('dlgEdicaoJogador').show()"></p:commandLink>
+				   				<h:outputText value="|" />
+				   				<p:commandLink value="Excluir" actionListener="#{atualizarJogadorBean.setJogador(jogador)}" process="@this" update=":dlgExcluirJogador" oncomplete="PF('dlgExcluirJogador').show()"></p:commandLink>
+				   			</p:column>
+				   		</p:dataTable>
+		   			</div>
+			   		
+			   		<div style="margin-top: 20px; text-align: center">
+			   			<p:commandButton value="Novo Jogador" action="#{navegacaoBean.irParaCadastroJogador()}" process="@this" icon="pi pi-user-plus" ></p:commandButton>
+			   		</div>
+		   		</p:panel>
+	   		</h:form>	
+	   		
+	   		<p:dialog widgetVar="dlgEdicaoJogador" id="dlgEdicaoJogador" header="Edição de Jogador" modal="true" draggable="false" resizable="false">
+	   			<h:form>
+		   			<div class="ui-g ui-fluid">
+						<div class="ui-g-3 ui-sm-12">
+							<p:outputLabel for="nome" value="Nome:"></p:outputLabel>
+						</div>
+						<div class="ui-g-9 ui-sm-12">
+							<p:inputText id="nome" value="#{atualizarJogadorBean.jogador.nome}"></p:inputText>
+						</div>
+						
+						<div class="ui-g-3 ui-sm-12">
+							<p:outputLabel for="email" value="E-mail:"></p:outputLabel>
+						</div>
+						<div class="ui-g-9 ui-sm-12">
+							<p:inputText id="email" value="#{atualizarJogadorBean.jogador.email}"></p:inputText>
+						</div>
+						
+						<div class="ui-g-3 ui-sm-12">
+							<p:outputLabel for="telefone" value="Telefone:"></p:outputLabel>
+						</div>
+						<div class="ui-g-9 ui-sm-12">
+							<p:inputMask id="telefone" value="#{atualizarJogadorBean.jogador.telefone}" mask="(99) 99999-9999"></p:inputMask>
+						</div>
+						
+						<div class="ui-g-12">
+							<div class="ui-g-12">
+								<p:commandButton value="Atualizar Cadastro " action="#{atualizarJogadorBean.atualizarRegistro()}" process="@form" update=":form-listar-jogadores:datatable-listar-jogadores" oncomplete="PF('dlgEdicaoJogador').hide()" icon="pi pi-check" ></p:commandButton>
+							</div>
+						</div>
+		   			</div>
+	   			</h:form>
+	   			
+	   		</p:dialog>
+	   		
+	   		<p:dialog widgetVar="dlgExcluirJogador" id="dlgExcluirJogador" header="Confirmar Exclusão de Jogador" modal="true" draggable="false" resizable="false">
+	   			<h:form>
+	   					Você deseja realmente excluir o jogador <span style="font-weight: bold">#{atualizarJogadorBean.jogador.nome}</span>?
+
+	   				<div class="ui-fluid ui-g">
+	   					<div class="ui-g-6">
+	   						<p:commandButton value="Não" process="@this" oncomplete="PF('dlgExcluirJogador').hide()" icon="pi pi-times" styleClass="btn-danger" ></p:commandButton>
+	   					</div>
+	   					
+	   					<div class="ui-g-6">
+	   						<p:commandButton value="Sim" actionListener="#{atualizarJogadorBean.excluir()}" action="#{listarJogadoresBean.removerJogadorLista(atualizarJogadorBean.jogador)}"  update=":form-listar-jogadores:datatable-listar-jogadores" oncomplete="PF('dlgExcluirJogador').hide()" icon="pi pi-check"></p:commandButton>
+	   					</div>
+	   				</div>
+	   			</h:form>
+	   		</p:dialog>
+	   		
+   		</ui:define>
+   </ui:composition>
+   	
+</html>

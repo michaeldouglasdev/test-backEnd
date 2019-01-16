@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+   
+		<ui:composition template="WEB-INF/template/template.xhtml">
+			<ui:define name="content">
+			
+				<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+ 
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+				    <p:graphicImage library="images" name="ajaxBar.gif" />
+				</p:dialog>
+				
+				<p:growl severity="info" life="3000" showDetail="true" escape="false">
+		   			<p:autoUpdate></p:autoUpdate>
+		   		</p:growl>
+		   		
+		   		<p:growl id="growl-error" globalOnly="true" severity="error" life="3000" showDetail="true"></p:growl>
+		   		
+		   		<h1>Cadastro de Jogador</h1>
+		   		
+		   		<p:separator></p:separator>
+		   		
+		   		<h:form>
+			   		<p:panel header="Jogador" styleClass="panel-blue">
+			   			<div class="ui-fluid ui-g">
+			   				<div class="ui-g-2 ui-sm-12">
+			   					<p:outputLabel for="nome" value="Nome:"></p:outputLabel>
+			   				</div>
+			   				<div class="ui-g-10 ui-sm-12">
+			   					<div class="ui-inputgroup">
+			   						<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+			   						<p:inputText id="nome" value="#{cadastrarJogadorBean.jogador.nome}" required="true">
+				   						<p:ajax event="blur" process="@this" update="@next @this" global="false"></p:ajax>
+				   					</p:inputText>
+			   					</div>
+			   				</div>
+			   				<div class="ui-g-10 ui-g-offset-2 ui-sm-12 ui-sm-offset-0">
+			   					<p:message for="nome" styleClass="ui-g-12"></p:message>
+			   				</div>
+			   				
+			   				<div class="ui-g-2 ui-sm-12">
+			   					<p:outputLabel for="email" value="E-mail:" required="true"></p:outputLabel>
+			   				</div>
+			   				<div class="ui-g-10 ui-sm-12">
+			   					<div class="ui-inputgroup">
+			   						<span class="ui-inputgroup-addon"><i class="fa fa-envelope"></i></span>
+			   						<p:inputText id="email" value="#{cadastrarJogadorBean.jogador.email}" required="true">
+			   							<f:validator validatorId="emailValidator"></f:validator>
+				   						<p:ajax event="blur" process="@this" update="@this @next" global="false"></p:ajax>
+				   					</p:inputText>
+			   					</div>
+			   					
+			   				</div>
+			   				<div class="ui-g-10 ui-g-offset-2 ui-sm-12 ui-sm-offset-0">
+			   					<p:message for="email" styleClass="ui-g-12"></p:message>
+			   				</div>
+			   				
+			   				<div class="ui-g-2 ui-sm-12">
+			   					<p:outputLabel for="telefone" value="Telefone:"></p:outputLabel>
+			   				</div>
+			   				<div class="ui-g-10 ui-sm-12">
+			   					<div class="ui-inputgroup">
+			   						<span class="ui-inputgroup-addon"><i class="fa fa-phone"></i></span>
+			   						<p:inputMask id="telefone" value="#{cadastrarJogadorBean.jogador.telefone}" mask="(99) 99999-9999"></p:inputMask>
+			   					</div>
+			   				</div>
+			   				
+			   				<div class="ui-g-12">
+			   					<p:outputLabel for="grupo" value="Quero ser do grupo:"></p:outputLabel>
+			   				</div>
+			   				
+			   				<div class="ui-g-12">
+			   					<p:selectOneRadio id="grupo" value="#{cadastrarJogadorBean.grupoSelecionado}" required="true" columns="1" layout="pageDirection">
+			   						<p:ajax process="@this" update="@next" global="false"></p:ajax>
+			   						
+			   						<f:selectItem itemLabel="Liga da Justiça" itemValue="Liga da Justiça"/>
+			   						<f:selectItem itemLabel="Os Vingadores" itemValue="Os Vingadores"/>
+			   					</p:selectOneRadio>
+			   				</div>
+			   				<div class="ui-g-12">
+			   					<p:message for="grupo"></p:message>
+			   				</div>
+			   				
+			   				<div class="ui-g-12">
+			   					<div class="ui-g-6 panel-button">
+			   						<p:commandButton value="Cadastrar" icon="pi pi-plus" actionListener="#{cadastrarJogadorBean.cadastrar()}" process="nome email telefone grupo @this" update="@form :growl-error" partialSubmit="true"></p:commandButton>
+			   					</div>
+			   					<div class="ui-g-6 panel-button">
+			   						<p:commandButton value="Listar Jogadores" action="#{navegacaoBean.irParaListarJogadores()}" process="@this" partialSubmit="true" icon="pi pi-list"></p:commandButton>
+			   					</div>
+			   				</div>
+			   			</div>
+			   		</p:panel>
+		   		</h:form>		
+			</ui:define>
+			
+		</ui:composition>   		
+</html>

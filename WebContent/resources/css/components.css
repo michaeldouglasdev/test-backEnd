@@ -1,0 +1,70 @@
+div.ui-g > div > label {
+	font-weight: bold;
+}
+
+.ui-growl {
+	top: 20px;
+}
+
+.ui-panel.panel-blue {
+	margin-bottom: 20px;
+}
+.ui-panel.panel-blue .ui-panel-titlebar {
+	background-color: #007ad9 !important;
+	
+	color: white !important;
+	font-weight: normal !important;
+}
+
+
+.datatable-listar-jogadores tbody tr td:last-child {
+	text-align: center;
+}
+
+.datatable-listar-jogadores tbody tr.ui-state-highlight td:last-child a{
+	color: white !important;
+}
+
+.datatable-listar-jogadores tbody tr.ui-state-highlight td:last-child a:hover{
+	color: #d6d6d6 !important;
+}
+
+div.ui-radiobutton + label {
+	font-weight: normal;
+}
+
+.panel-button {
+	height: 100%;
+}
+
+.ui-button {
+	height: 100%;
+}
+
+.ui-datatable-data td {
+	overflow-wrap: break-word;
+}
+
+.ui-inputtext, .ui-inputgroup .ui-inputgroup-addon {
+	border-color: #d6d6d6;
+}
+
+.ui-inputgroup .ui-inputgroup-addon {
+	width: 48px;
+}
+
+.btn-danger {
+	color: #fff !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+.btn-danger:hover {
+	color: #fff !important;
+    background-color: #c82333 !important;
+    border-color: #bd2130 !important;
+}
+
+.ui-dialog {
+	max-width: 80%;
+}
